@@ -15,7 +15,6 @@ spec:
       containers:
         - name: devfront
           image: aidenhsy/devfront
-          # image: asia.gcr.io/hyhaus-dev/devfront
 ---
 apiVersion: v1
 kind: Service
