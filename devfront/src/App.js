@@ -12,7 +12,7 @@ const App = () => {
   }, []);
   return (
     <div>
-      <h1>hello this is from frontend</h1>
+      <h1>hello this is from frontend.</h1>
       <h1>{message}</h1>
     </div>
   );
