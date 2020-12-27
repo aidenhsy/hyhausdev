@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devfront-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devfront
+  template:
+    metadata:
+      labels:
+        app: devfront
+    spec:
+      containers:
+        - name: devfront
+          image: aidenhsy/devfront
+          # image: asia.gcr.io/hyhaus-dev/devfront
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devfront-srv
+spec:
+  selector:
+    app: devfront
+  ports:
+    - name: devfront
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

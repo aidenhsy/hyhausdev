@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devback-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devback
+  template:
+    metadata:
+      labels:
+        app: devback
+    spec:
+      containers:
+        - name: devback
+          image: aidenhsy/devback
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devback-srv
+spec:
+  selector:
+    app: devback
+  ports:
+    - name: devback
+      protocol: TCP
+      port: 4000
+      targetPort: 4000
