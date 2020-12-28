@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
 
 import PhotoCard from '../components/PhotoCard';
 
@@ -14,17 +13,16 @@ const PhotosPage = () => {
     };
     fetchPhotos();
   }, []);
-  console.log(photos);
+
   return (
     <React.Fragment>
-      <Button variant="outlined" component={Link} to="/">
-        HomePage
-      </Button>
-      <div>
+      <Grid container style={{ margin: 0 }}>
         {photos.map((photo) => (
-          <PhotoCard key={photo._id} photo={photo} />
+          <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
+            <PhotoCard photo={photo} />
+          </Grid>
         ))}
-      </div>
+      </Grid>
     </React.Fragment>
   );
 };
