@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import HomePage from './pages/HomePage';
+import PhotosPage from './pages/PhotosPage';
 
 const App = () => {
-  const [message, setMessage] = useState('');
-  useEffect(() => {
-    const fetchMessage = async () => {
-      const { data } = await axios.get('/api/message');
-      setMessage(data);
-    };
-    fetchMessage();
-  }, []);
   return (
-    <div>
-      <h1>hello this is from frontend.</h1>
-      <h1>{message}</h1>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={HomePage} exact />
+        <Route path="/photos" component={PhotosPage} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
