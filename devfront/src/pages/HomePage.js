@@ -16,8 +16,13 @@ const HomePage = () => {
     <div>
       <h1>hello this is from frontend.</h1>
       <h1>{message}</h1>
+      <hr style={{ margin: '20px 0' }} />
       <Button variant="outlined" component={Link} to="/photos">
         Photos page
+      </Button>
+      <hr style={{ margin: '20px 0' }} />
+      <Button variant="outlined" component={Link} to="/tabs">
+        Tabs page
       </Button>
     </div>
   );

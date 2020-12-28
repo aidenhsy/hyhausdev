@@ -5,6 +5,7 @@ const PhotoSchema = new mongoose.Schema({
   images: String,
   author: String,
   authorImage: String,
+  city: String,
 });
 
 const Photo = mongoose.model('Photo', PhotoSchema);
