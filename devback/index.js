@@ -13,7 +13,7 @@ connectDB();
 app.use(cors());
 
 app.get('/api/message', (req, res) => {
-  res.send('hello this is from backend');
+  res.send('hello this is from backend.');
 });
 app.get(
   '/api/photos',
