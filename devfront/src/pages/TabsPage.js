@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, Tab, AppBar, Grid, useScrollTrigger } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import TabPanel from './TabPanel';
 
 import PhotoCard from '../components/PhotoCard';
 
@@ -18,18 +19,20 @@ function ElevationScroll(props) {
   });
 }
 
-const useStyles = makeStyles((theme) => ({
-  tabContainer: {
-    margin: 'auto',
+const useTabStyles = makeStyles({
+  root: {
+    justifyContent: 'center',
+  },
+  scroller: {
+    flexGrow: '0',
   },
   tab: {
-    minWidth: 50,
-    marginLeft: '25px',
+    maxWidth: 20,
   },
-}));
+});
 
 const TabsPage = () => {
-  const classes = useStyles();
+  const classes = useTabStyles();
   const [active, setActive] = useState(0);
 
   const handleChange = (e, value) => {
@@ -52,8 +55,7 @@ const TabsPage = () => {
           <Tabs
             value={active}
             onChange={handleChange}
-            //className centers the tabs, but can't scroll, classes does not center the tab but scrolls
-            className={classes.tabContainer}
+            classes={{ root: classes.root, scroller: classes.scroller }}
             variant={'scrollable'}
             scrollButtons={'on'}
           >
@@ -65,13 +67,25 @@ const TabsPage = () => {
           </Tabs>
         </AppBar>
       </ElevationScroll>
-      <Grid container style={{ marginTop: '2em' }}>
-        {photos.map((photo) => (
-          <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
-            <PhotoCard photo={photo} />
+
+      {['', 'shanghai', 'beijing', 'chengdu', 'dalian'].map((city, index) => (
+        <TabPanel value={active} index={index} key={index}>
+          <Grid
+            container
+            style={{ marginTop: '2em' }}
+            justify="center"
+            spacing={4}
+          >
+            {photos
+              .filter((photo) => photo.city.includes(city))
+              .map((photo) => (
+                <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
+                  <PhotoCard photo={photo} />
+                </Grid>
+              ))}
           </Grid>
-        ))}
-      </Grid>
+        </TabPanel>
+      ))}
     </React.Fragment>
   );
 };

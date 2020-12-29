@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   card: {
-    maxWidth: 345,
     borderRadius: 30,
   },
   cardHeader: {
