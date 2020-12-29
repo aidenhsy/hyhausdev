@@ -5,6 +5,7 @@ import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import PhotosPage from './pages/PhotosPage';
 import TabsPage from './pages/TabsPage';
+import TestPage from './pages/TestPage';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" component={HomePage} exact />
         <Route path="/photos" component={PhotosPage} />
         <Route path="/tabs" component={TabsPage} />
+        <Route path="/test" component={TestPage} />
       </Switch>
     </BrowserRouter>
   );

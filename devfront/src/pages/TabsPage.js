@@ -1,21 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab, AppBar, Grid, useScrollTrigger } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
-const useTabStyles = makeStyles({
-  root: {
-    justifyContent: 'center',
+import PhotoCard from '../components/PhotoCard';
+
+function ElevationScroll(props) {
+  const { children, window } = props;
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 80,
+    target: window ? window() : undefined,
+  });
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
+}
+
+const useStyles = makeStyles((theme) => ({
+  tabContainer: {
+    margin: 'auto',
   },
-  scroller: {
-    flexGrow: '0',
+  tab: {
+    minWidth: 50,
+    marginLeft: '25px',
   },
-});
+}));
 
 const TabsPage = () => {
-  const classes = useTabStyles();
-  const cities = ['All', 'Shanghai', 'Beijing', 'Chengdu', 'Dalian'];
-  const [active, setActive] = useState(cities[0]);
+  const classes = useStyles();
+  const [active, setActive] = useState(0);
+
+  const handleChange = (e, value) => {
+    setActive(value);
+  };
 
   const [photos, setPhotos] = useState([]);
   useEffect(() => {
@@ -26,26 +45,34 @@ const TabsPage = () => {
     fetchPhotos();
   }, []);
 
-  console.log(photos);
-
   return (
-    <Tabs
-      classes={{ root: classes.root, scroller: classes.scroller }}
-      value={active}
-      onChange={(event, newValue) => {
-        setActive(newValue);
-      }}
-      indicatorColor="primary"
-      textColor="primary"
-      variant={'scrollable'}
-      scrollButtons={'on'}
-    >
-      <Tab key={0} label="All" value="All" />
-      <Tab key={1} label="Shanghai" value="Shanghai" />
-      <Tab key={2} label="Beijing" value="Beijing" />
-      <Tab key={3} label="Chengdu" value="Chengdu" />
-      <Tab key={4} label="Dalian" value="Dalian" />
-    </Tabs>
+    <React.Fragment>
+      <ElevationScroll>
+        <AppBar position="sticky" color="inherit" elevation={0}>
+          <Tabs
+            value={active}
+            onChange={handleChange}
+            //className centers the tabs, but can't scroll, classes does not center the tab but scrolls
+            className={classes.tabContainer}
+            variant={'scrollable'}
+            scrollButtons={'on'}
+          >
+            <Tab label="All" className={classes.tab} />
+            <Tab label="Shanghai" className={classes.tab} />
+            <Tab label="Beijing" className={classes.tab} />
+            <Tab label="Chengdu" className={classes.tab} />
+            <Tab label="Dalian" className={classes.tab} />
+          </Tabs>
+        </AppBar>
+      </ElevationScroll>
+      <Grid container style={{ marginTop: '2em' }}>
+        {photos.map((photo) => (
+          <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
+            <PhotoCard photo={photo} />
+          </Grid>
+        ))}
+      </Grid>
+    </React.Fragment>
   );
 };
 
