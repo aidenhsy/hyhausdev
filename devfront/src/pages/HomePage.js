@@ -24,6 +24,10 @@ const HomePage = () => {
       <Button variant="outlined" component={Link} to="/tabs">
         Tabs page
       </Button>
+      <hr style={{ margin: '20px 0' }} />
+      <Button variant="outlined" component={Link} to="/test">
+        Tabs Test page
+      </Button>
     </div>
   );
 };
