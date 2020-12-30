@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/user';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -14,14 +17,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
+const SignIn = ({ history }) => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { userInfo } = useSelector((state) => state.userLogin);
+
+  useEffect(() => {
+    if (userInfo && userInfo.email) {
+      history.push('/');
+    }
+  });
+
+  const dispatch = useDispatch();
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(`${email} ${password}`);
+    dispatch(login(email, password));
   };
   return (
     <form onSubmit={submitHandler} className="form-container">
