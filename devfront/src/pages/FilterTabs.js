@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs, Tab, AppBar, Grid, useScrollTrigger } from '@material-ui/core';
+import {
+  Tabs,
+  Tab,
+  AppBar,
+  Grid,
+  useScrollTrigger,
+  CircularProgress,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import TabPanel from './TabPanel';
+import { fetchPhotos } from '../redux/photo';
+import { useDispatch, useSelector } from 'react-redux';
+import TabPanel from '../components/TabPanel';
 
 import PhotoCard from '../components/PhotoCard';
 
@@ -31,7 +39,7 @@ const useTabStyles = makeStyles({
   },
 });
 
-const TabsPage = () => {
+const FilterTabs = () => {
   const classes = useTabStyles();
   const [active, setActive] = useState(0);
 
@@ -39,14 +47,11 @@ const TabsPage = () => {
     setActive(value);
   };
 
-  const [photos, setPhotos] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const fetchPhotos = async () => {
-      const { data } = await axios.get('/api/photos');
-      setPhotos(data);
-    };
-    fetchPhotos();
-  }, []);
+    dispatch(fetchPhotos());
+  }, [dispatch]);
+  const { photos, loading, error } = useSelector((state) => state.photoList);
 
   return (
     <React.Fragment>
@@ -67,27 +72,40 @@ const TabsPage = () => {
           </Tabs>
         </AppBar>
       </ElevationScroll>
-
-      {['', 'shanghai', 'beijing', 'chengdu', 'dalian'].map((city, index) => (
-        <TabPanel value={active} index={index} key={index}>
-          <Grid
-            container
-            style={{ marginTop: '2em' }}
-            justify="center"
-            spacing={4}
-          >
-            {photos
-              .filter((photo) => photo.city.includes(city))
-              .map((photo) => (
-                <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
-                  <PhotoCard photo={photo} />
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {loading === 'pending' ? (
+          <CircularProgress
+            color="secondary"
+            size="10em"
+            style={{ marginTop: '10em' }}
+          />
+        ) : error ? (
+          <h1>{error}</h1>
+        ) : (
+          ['', 'shanghai', 'beijing', 'chengdu', 'dalian'].map(
+            (city, index) => (
+              <TabPanel value={active} index={index} key={index}>
+                <Grid
+                  container
+                  style={{ marginTop: '2em' }}
+                  justify="center"
+                  spacing={2}
+                >
+                  {photos
+                    .filter((photo) => photo.city.includes(city))
+                    .map((photo) => (
+                      <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
+                        <PhotoCard photo={photo} />
+                      </Grid>
+                    ))}
                 </Grid>
-              ))}
-          </Grid>
-        </TabPanel>
-      ))}
+              </TabPanel>
+            )
+          )
+        )}
+      </div>
     </React.Fragment>
   );
 };
 
-export default TabsPage;
+export default FilterTabs;
