@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 
 import PhotoCard from '../components/PhotoCard';
 
-const PhotosPage = () => {
+const Masonry = () => {
   const [photos, setPhotos] = useState([]);
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -27,4 +27,4 @@ const PhotosPage = () => {
   );
 };
 
-export default PhotosPage;
+export default Masonry;
