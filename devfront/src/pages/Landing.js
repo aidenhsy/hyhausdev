@@ -4,6 +4,9 @@ import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../redux/user';
+
 const useStyles = makeStyles((theme) => ({
   button: {
     marginRight: '5em',
@@ -21,6 +24,9 @@ const Landing = () => {
     };
     fetchMessage();
   }, []);
+
+  const { userInfo } = useSelector((state) => state.userLogin);
+  const dispatch = useDispatch();
 
   return (
     <div style={{ margin: '0 2em' }}>
@@ -57,7 +63,14 @@ const Landing = () => {
         Test
       </Button>
       <hr style={{ margin: '20px 0' }} />
-      <h3>User Management</h3>
+      <h3>
+        User Management{' '}
+        {userInfo.name ? (
+          <span style={{ color: 'red' }}>{userInfo.name} is signed in</span>
+        ) : (
+          <span style={{ color: 'red' }}>No user is signed in</span>
+        )}
+      </h3>
       <div style={{ display: 'flex' }}>
         <Button
           variant="outlined"
@@ -74,6 +87,13 @@ const Landing = () => {
           to="/signup"
         >
           Sign up
+        </Button>
+        <Button
+          variant="outlined"
+          className={classes.button}
+          onClick={() => dispatch(logout())}
+        >
+          Sign out
         </Button>
       </div>
     </div>

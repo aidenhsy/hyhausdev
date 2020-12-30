@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { photoListSlice } from './photo';
-import { userInfoSlice } from './user';
+import { userRegisterSlice, userLoginSlice } from './user';
 
 const reducer = {
   photoList: photoListSlice.reducer,
-  userInfo: userInfoSlice.reducer,
+  userRegister: userRegisterSlice.reducer,
+  userLogin: userLoginSlice.reducer,
 };
 
 const store = configureStore({ reducer });
