@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, Tab, AppBar, Avatar, Badge } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { countUserPhotos } from '../redux/user';
 
 import ProfilePosts from '../components/ProfilePosts';
 import ProfileRequests from '../components/ProfileRequests';
@@ -52,6 +53,11 @@ function TabPanel({ children, index, value }) {
 
 const Profile = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(countUserPhotos());
+  }, [dispatch]);
 
   const [active, setActive] = useState(0);
 
@@ -60,8 +66,9 @@ const Profile = () => {
   };
 
   const {
-    userInfo: { name },
+    userInfo: { _id, name },
   } = useSelector((state) => state.userLogin);
+  const { count } = useSelector((state) => state.userPhotoCount);
 
   return (
     <React.Fragment>
@@ -80,7 +87,7 @@ const Profile = () => {
           <h1>{name}</h1>
           <div className={classes.dataContainer}>
             <div>
-              <b>12</b> posts
+              <b>{count}</b> posts
             </div>
           </div>
         </div>
@@ -94,7 +101,7 @@ const Profile = () => {
         </Tabs>
       </AppBar>
       <TabPanel value={active} index={0}>
-        <ProfilePosts />
+        <ProfilePosts userId={_id} />
       </TabPanel>
       <TabPanel value={active} index={1}>
         <ProfileRequests />

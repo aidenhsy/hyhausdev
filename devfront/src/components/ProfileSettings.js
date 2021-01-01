@@ -35,9 +35,8 @@ const ProfileSettings = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [city, setCity] = useState('');
-  const [message, setMessage] = useState(null);
 
-  const { loading, error, user } = useSelector((state) => state.userDetails);
+  const { user } = useSelector((state) => state.userDetails);
   const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {

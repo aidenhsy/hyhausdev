@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Photo from '../components/Photo';
 
-const ProfilePosts = () => {
+const ProfilePosts = ({ userId }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPhotos());
@@ -22,11 +22,13 @@ const ProfilePosts = () => {
         flexWrap: 'wrap',
       }}
     >
-      {photos.map((photo) => (
-        <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
-          <Photo photo={photo} />
-        </Grid>
-      ))}
+      {photos
+        .filter((photo) => photo.user._id === userId)
+        .map((photo) => (
+          <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
+            <Photo photo={photo} />
+          </Grid>
+        ))}
     </div>
   );
 };
