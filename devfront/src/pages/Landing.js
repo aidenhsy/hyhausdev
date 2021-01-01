@@ -53,16 +53,6 @@ const Landing = () => {
         Tabs page
       </Button>
       <hr style={{ margin: '20px 0' }} />
-      <h3>Test Page</h3>
-      <Button
-        variant="outlined"
-        className={classes.button}
-        component={Link}
-        to="/test"
-      >
-        Test
-      </Button>
-      <hr style={{ margin: '20px 0' }} />
       <h3>
         User Management{' '}
         {userInfo.name ? (
@@ -95,7 +85,25 @@ const Landing = () => {
         >
           Sign out
         </Button>
+        <Button
+          variant="outlined"
+          className={classes.button}
+          component={Link}
+          to="/profile"
+        >
+          Profile
+        </Button>
       </div>
+      <hr style={{ margin: '20px 0' }} />
+      <h3>Image Upload</h3>
+      <Button
+        variant="outlined"
+        className={classes.button}
+        component={Link}
+        to="/upload"
+      >
+        Upload
+      </Button>
     </div>
   );
 };

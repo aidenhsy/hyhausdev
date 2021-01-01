@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    - host: www.hyhaus.xyz
+    - host: hyhaus.xyz
       http:
         paths:
           - path: /api/?(.*)

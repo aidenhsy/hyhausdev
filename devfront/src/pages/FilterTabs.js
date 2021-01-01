@@ -10,7 +10,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { fetchPhotos } from '../redux/photo';
 import { useDispatch, useSelector } from 'react-redux';
-import TabPanel from '../components/TabPanel';
 
 import PhotoCard from '../components/PhotoCard';
 
@@ -27,6 +26,10 @@ function ElevationScroll(props) {
   });
 }
 
+function TabPanel({ children, index, value }) {
+  return value === index && <div>{children}</div>;
+}
+
 const useTabStyles = makeStyles({
   root: {
     justifyContent: 'center',
@@ -35,7 +38,8 @@ const useTabStyles = makeStyles({
     flexGrow: '0',
   },
   tab: {
-    maxWidth: 20,
+    minWidth: 20,
+    marginLeft: '25px',
   },
 });
 
@@ -87,14 +91,14 @@ const FilterTabs = () => {
               <TabPanel value={active} index={index} key={index}>
                 <Grid
                   container
-                  style={{ marginTop: '2em' }}
+                  style={{ marginTop: '0.5em' }}
                   justify="center"
                   spacing={2}
                 >
                   {photos
                     .filter((photo) => photo.city.includes(city))
                     .map((photo) => (
-                      <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
+                      <Grid item key={photo._id} xs={6} sm={6} md={4} xl={3}>
                         <PhotoCard photo={photo} />
                       </Grid>
                     ))}

@@ -16,7 +16,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isPhotographer: {
+      type: Boolean,
+      default: false,
+    },
     city: String,
+    image: String,
   },
   { timestamps: true }
 );

@@ -5,6 +5,8 @@ import {
   CardActions,
   CardHeader,
   Avatar,
+  useTheme,
+  useMediaQuery,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,9 +18,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       cursor: 'pointer',
     },
-  },
-  card: {
-    borderRadius: 30,
   },
   cardHeader: {
     height: 15,
@@ -32,36 +31,42 @@ const useStyles = makeStyles((theme) => ({
 
 const PhotoCard = ({ photo }) => {
   const classes = useStyles();
+  const theme = useTheme();
+
+  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
+
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} style={{ borderRadius: matchesXS ? 0 : 30 }}>
       <CardMedia
         className={classes.cardMedia}
         image={photo.image}
         title="Paella dish"
       />
-      <CardActions>
-        <CardHeader
-          avatar={
-            <Avatar
-              alt="Remy Sharp"
-              src={photo.authorImage}
-              className={classes.avatar}
-              component={Link}
-              to="/profile/meganli"
-            />
-          }
-          title={
-            <Link
-              to={`/profile/${photo.author.split(' ')[0]}`}
-              style={{ color: 'black' }}
-            >
-              {photo.author}
-            </Link>
-          }
-          subheader="September 14, 2021"
-          className={classes.cardHeader}
-        />
-      </CardActions>
+      {!matchesXS && (
+        <CardActions>
+          <CardHeader
+            avatar={
+              <Avatar
+                alt="Remy Sharp"
+                src={photo.authorImage}
+                className={classes.avatar}
+                component={Link}
+                to="/profile/meganli"
+              />
+            }
+            title={
+              <Link
+                to={`/profile/${photo.author.split(' ')[0]}`}
+                style={{ color: 'black' }}
+              >
+                {photo.author}
+              </Link>
+            }
+            subheader="September 14, 2021"
+            className={classes.cardHeader}
+          />
+        </CardActions>
+      )}
     </Card>
   );
 };
