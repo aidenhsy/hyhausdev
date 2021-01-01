@@ -6,6 +6,7 @@ import PhotoCard from '../components/PhotoCard';
 
 const Masonry = () => {
   const [photos, setPhotos] = useState([]);
+
   useEffect(() => {
     const fetchPhotos = async () => {
       const { data } = await axios.get('/api/photos');
@@ -18,7 +19,7 @@ const Masonry = () => {
     <React.Fragment>
       <Grid container style={{ margin: 0 }}>
         {photos.map((photo) => (
-          <Grid item key={photo._id} sm={12} md={6} lg={4} xl={3}>
+          <Grid item key={photo._id} lg={4}>
             <PhotoCard photo={photo} />
           </Grid>
         ))}
