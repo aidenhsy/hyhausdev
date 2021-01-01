@@ -94,3 +94,11 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error('user not found');
   }
 });
+
+// @desc    Update user public profile
+// @route   GET /api/users/profile/:id
+// @access  Public
+export const getUserPublicProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.json(user);
+});

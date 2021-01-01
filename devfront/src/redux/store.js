@@ -5,6 +5,8 @@ import {
   userLoginSlice,
   userDetailsSlice,
   userUpdateProfileSlice,
+  userPhotoCountSlice,
+  userPublicDetailsSlice,
 } from './user';
 
 const reducer = {
@@ -15,6 +17,8 @@ const reducer = {
   userLogin: userLoginSlice.reducer,
   userDetails: userDetailsSlice.reducer,
   userUpdateProfile: userUpdateProfileSlice.reducer,
+  userPhotoCount: userPhotoCountSlice.reducer,
+  userPublicDetails: userPublicDetailsSlice.reducer,
 };
 
 const store = configureStore({ reducer });

@@ -96,7 +96,7 @@ const FilterTabs = () => {
                   spacing={2}
                 >
                   {photos
-                    .filter((photo) => photo.city.includes(city))
+                    .filter((photo) => photo.user.city.includes(city))
                     .map((photo) => (
                       <Grid item key={photo._id} xs={6} sm={6} md={4} xl={3}>
                         <PhotoCard photo={photo} />

@@ -11,6 +11,7 @@ import FilterTabs from './pages/FilterTabs';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
+import PublicProfile from './pages/PublicProfile';
 import UploadImage from './pages/UploadImage';
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Header />
         <Switch>
           <Route path="/" component={Landing} exact />
+          <Route path="/profile/:id" component={PublicProfile} />
           <Route path="/photos" component={Masonry} />
           <Route path="/tabs" component={FilterTabs} />
           <Route path="/signin" component={SignIn} />

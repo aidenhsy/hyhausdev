@@ -48,21 +48,21 @@ const PhotoCard = ({ photo }) => {
             avatar={
               <Avatar
                 alt="Remy Sharp"
-                src={photo.authorImage}
+                src={photo.user.image}
                 className={classes.avatar}
                 component={Link}
-                to="/profile/meganli"
+                to={`/profile/${photo.user._id}`}
               />
             }
             title={
               <Link
-                to={`/profile/${photo.author.split(' ')[0]}`}
+                to={`/profile/${photo.user._id}`}
                 style={{ color: 'black' }}
               >
-                {photo.author}
+                {photo.user.name}
               </Link>
             }
-            subheader="September 14, 2021"
+            subheader={`${photo.time}`}
             className={classes.cardHeader}
           />
         </CardActions>

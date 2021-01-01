@@ -153,7 +153,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(`/api/users/${id}`, config);
-    console.log(data);
     dispatch(userDetailsReceived(data));
   } catch (error) {
     dispatch(userDetailsError(error.toString()));
@@ -207,5 +206,96 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch(userUpdateProfileReceived(data));
   } catch (error) {
     dispatch(userUpdateProfileError(error.toString()));
+  }
+};
+
+//USER PHOTO COUNT
+export const userPhotoCountSlice = createSlice({
+  name: 'userPhotoCount',
+  initialState: { loading: 'idle' },
+  reducers: {
+    userPhotoCountLoading(state) {
+      if (state.loading === 'idle') {
+        state.loading = 'pending';
+      }
+    },
+    userPhotoCountReceived(state, action) {
+      if (state.loading === 'pending') {
+        state.loading = 'idle';
+        state.count = action.payload;
+      }
+    },
+    userPhotoCountError(state, action) {
+      if (state.loading === 'pending') {
+        state.loading = 'idle';
+        state.error = action.payload;
+      }
+    },
+  },
+});
+
+export const {
+  userPhotoCountLoading,
+  userPhotoCountReceived,
+  userPhotoCountError,
+} = userPhotoCountSlice.actions;
+
+export const countUserPhotos = () => async (dispatch, getState) => {
+  dispatch(userPhotoCountLoading());
+  try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/photos/count`, config);
+    dispatch(userPhotoCountReceived(data));
+  } catch (error) {
+    dispatch(userPhotoCountError(error.toString()));
+  }
+};
+
+//USER PUBLIC DETAILS
+export const userPublicDetailsSlice = createSlice({
+  name: 'userDetails',
+  initialState: { loading: 'idle', userInfo: {} },
+  reducers: {
+    userPublicDetailsLoading(state) {
+      if (state.loading === 'idle') {
+        state.loading = 'pending';
+      }
+    },
+    userPublicDetailsReceived(state, action) {
+      if (state.loading === 'pending') {
+        state.loading = 'idle';
+        state.userInfo = action.payload;
+      }
+    },
+    userPublicDetailsError(state, action) {
+      if (state.loading === 'pending') {
+        state.loading = 'idle';
+        state.error = action.payload;
+      }
+    },
+  },
+});
+
+export const {
+  userPublicDetailsLoading,
+  userPublicDetailsReceived,
+  userPublicDetailsError,
+} = userPublicDetailsSlice.actions;
+
+export const getUserPublicDetails = (id) => async (dispatch) => {
+  dispatch(userPublicDetailsLoading());
+  try {
+    const { data } = await axios.get(`/api/users/${id}`);
+    dispatch(userPublicDetailsReceived(data));
+  } catch (error) {
+    dispatch(userPublicDetailsError(error.toString()));
   }
 };

@@ -27,6 +27,10 @@ const PhotoSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    time: {
+      type: String,
+      default: new Date().toDateString().slice(4, 15),
+    },
     comments: [CommentSchema],
   },
   { timestamps: true }

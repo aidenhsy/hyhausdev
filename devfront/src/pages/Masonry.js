@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 
 import PhotoCard from '../components/PhotoCard';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPhotos } from '../redux/photo';
+
 const Masonry = () => {
-  const [photos, setPhotos] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchPhotos = async () => {
-      const { data } = await axios.get('/api/photos');
-      setPhotos(data);
-    };
-    fetchPhotos();
-  }, []);
+    dispatch(fetchPhotos());
+  }, [dispatch]);
+
+  const { photos } = useSelector((state) => state.photoList);
 
   return (
     <React.Fragment>
